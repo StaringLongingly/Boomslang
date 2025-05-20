@@ -1,6 +1,6 @@
 grammar Boomslang;
 
-// TODO: Complete Statements, Check for correct newlining
+// TODO: Check for correct newlining
 
 /*
 / Parser Rules
@@ -8,6 +8,7 @@ grammar Boomslang;
 
 program:
   (program_piece NEWLINE)+
+  PROGRAM_END
   ;
 
 program_piece:
@@ -46,11 +47,11 @@ function_block:
   ;
 
 function_declaration:
-  FUNCTION_DECLARATION_START SPACE name FUNCTION_ARGUMENTS arguments NEWLINE
+  FUNCTION_DECLARATION_START name FUNCTION_ARGUMENTS arguments NEWLINE
   ;
 
 arguments:
-  name (COMMA name).
+  name (COMMA SPACE name).
 
 condition:
   condition BOOL_COMPARISON condition
@@ -58,16 +59,28 @@ condition:
   | STRUNBER STRUNBER_COMPARISON STRUNBER_COMPARISON
   ;
 
+statement:
+  PRINT_START SPACE STRUNBER NEWLINE
+  | ASSIGN_START name ASSIGN_MIDDLE STRUNBER
+  | FUNCTION_RETURN STRUNBER?
+  ;
+
 /*
 / Lexer Rules
 */
 
 // Declaration String Fragments
-BLOCK_CLOSE: 'END OF STORY\n'
-IF_START: 'WHAT IF'
-WHILE_START: 'STAY TUNED WHILE'
-FUNCTION_DECLARATION_START: 'DISCOVER HOW TO' 
-FUNCTION_BODY_START: 'RUMOR HAS IT' 
+PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE'
+BLOCK_CLOSE: 'END OF STORY\n' ;
+IF_START: 'WHAT IF' ;
+WHILE_START: 'STAY TUNED WHILE' ; 
+FUNCTION_DECLARATION_START: 'DISCOVER HOW TO ' ;
+FUNCTION_ARGUMENTS: ' WITH' ;
+FUNCTION_BODY_START: 'RUMOR HAS IT' ;
+FUNCTION_RETURN: 'SHOCKING DEVELOPMENT ' ;
+PRINT_START: 'YOU WON'T WANT TO MISS' ;
+ASSIGN_START: 'EXPERTS CLAIM ' ;
+ASSIGN_MIDDLE: ' TO BE ' ;
 
 // Strunbers 
 fragment JINT : [0-9]+;
