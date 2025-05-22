@@ -6,7 +6,7 @@ grammar Boomslang;
 / Parser Rules
 */
 
-program:
+init:
   (program_piece NEWLINE)+
   PROGRAM_END
   ;
@@ -37,6 +37,7 @@ while_block:
 
 while_declaration:
   WHILE_START SPACE condition NEWLINE
+  ;
 
 // Function Statement
 function_block:
@@ -52,6 +53,7 @@ function_declaration:
 
 arguments:
   name (COMMA SPACE name).
+  ;
 
 condition:
   condition BOOL_COMPARISON condition
@@ -70,7 +72,7 @@ statement:
 */
 
 // Declaration String Fragments
-PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE'
+PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE' ;
 BLOCK_CLOSE: 'END OF STORY\n' ;
 IF_START: 'WHAT IF' ;
 WHILE_START: 'STAY TUNED WHILE' ; 
