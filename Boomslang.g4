@@ -1,6 +1,6 @@
 grammar Boomslang;
 
-// TODO: Correctly close function block 
+// TODO: Correctly close function blo 
 
 /*
 / Parser Rules
@@ -22,14 +22,13 @@ program_piece:
 // If
 if_block:
   ((if_declaration NEWLINE program_piece)
-  | (if_declaration SPACES BLOCK_OPEN program_piece+))
+  | (if_declaration SPACES BLOCK_OPEN program_piece+ BLOCK_CLOSE))
   else_block?
-  BLOCK_CLOSE
   ;
 
 else_block:
   (ELSE_START NEWLINE program_piece)
-  | (ELSE_START SPACES BLOCK_OPEN program_piece+)
+  | (ELSE_START SPACES BLOCK_OPEN program_piece+ BLOCK_CLOSE)
   ;
 
 if_declaration:
@@ -103,7 +102,7 @@ value:
 // Declaration String Fragments
 PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE' ;
 BLOCK_OPEN: 'RUMOR HAS IT' NEWLINE ;
-BLOCK_CLOSE: 'END OF STORY' NEWLINE ;
+BLOCK_CLOSE: SPACES? 'END OF STORY' NEWLINE ;
 IF_START: 'WHAT IF' ;
 ELSE_START: 'LIES!' ;
 WHILE_START: 'STAY TUNED WHILE' ; 
