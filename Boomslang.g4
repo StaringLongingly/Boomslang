@@ -1,13 +1,11 @@
 grammar Boomslang;
 
-// TODO: Check for correct newlining
-
 /*
 / Parser Rules
 */
 
 init:
-  (program_piece NEWLINE)+
+  program_piece+
   PROGRAM_END
   ;
 
