@@ -1,6 +1,6 @@
 grammar Boomslang;
 
-// TODO: Check for correct newlining, Implement Arithmetic Operations, Fix EOF
+// TODO: Check for correct newlining
 
 /*
 / Parser Rules
@@ -16,7 +16,7 @@ program_piece:
     | while_block
     | function_block
     | statement)
-  NEWLINE+
+  NEWLINE*
   ;
 
 // If
@@ -97,7 +97,7 @@ value:
 
 // Declaration String Fragments
 PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE' ;
-BLOCK_CLOSE: '*' 'END OF STORY\n?' | SPACES? 'END OF STORY' NEWLINE;
+BLOCK_CLOSE: 'END OF STORY' NEWLINE;
 IF_START: 'WHAT IF' ;
 ELSE_START: 'LIES! RUMOR HAS IT' NEWLINE;
 WHILE_START: 'STAY TUNED WHILE' ; 
