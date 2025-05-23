@@ -23,13 +23,12 @@ program_piece:
 if_block:
   if_declaration
   program_piece+
-  (ELSE_START
-  program_piece+)?
+  (ELSE_START program_piece+)?
   BLOCK_CLOSE
   ;
 
 if_declaration:
-  IF_START SPACE condition NEWLINE
+  IF_START SPACES condition NEWLINE
   ;
 
 // While
@@ -40,7 +39,7 @@ while_block:
   ;
 
 while_declaration:
-  WHILE_START SPACE condition NEWLINE
+  WHILE_START SPACES condition NEWLINE
   ;
 
 // Function
@@ -52,11 +51,11 @@ function_block:
   ;
 
 function_declaration:
-  FUNCTION_DECLARATION_START name (FUNCTION_ARGUMENTS arguments)? NEWLINE
+  FUNCTION_DECLARATION_START name (FUNCTION_ARGUMENTS arguments+)? NEWLINE
   ;
 
 arguments:
-  value (COMMA SPACE value)*
+  value (COMMA SPACES value)*
   ;
 
 condition:
@@ -86,9 +85,11 @@ return:
 name: NAME ;
 value:
   STRUNBER 
+  | value OP value
   | name ' OF ' arguments
-  | name 
+  | name
   ;
+
 
 /*
 / Lexer Rules
@@ -96,14 +97,14 @@ value:
 
 // Declaration String Fragments
 PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE' ;
-BLOCK_CLOSE: 'END OF STORY' NEWLINE;
+BLOCK_CLOSE: '*' 'END OF STORY\n?' | SPACES? 'END OF STORY' NEWLINE;
 IF_START: 'WHAT IF' ;
 ELSE_START: 'LIES! RUMOR HAS IT' NEWLINE;
 WHILE_START: 'STAY TUNED WHILE' ; 
 FUNCTION_DECLARATION_START: 'DISCOVER HOW TO ' ;
 FUNCTION_ARGUMENTS: ' WITH ' ;
 FUNCTION_BODY_START: 'RUMOR HAS IT' ;
-FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACE) ;
+FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACES) ;
 PRINT_START: 'YOU WON\'T WANT TO MISS ' ;
 ASSIGN_START: 'EXPERTS CLAIM ' ;
 ASSIGN_MIDDLE: ' TO BE ' ;
@@ -118,16 +119,33 @@ STRUNBER:
   | STRING
   ;
 
+NUMBER: 
+  JINT
+  | BLOAT
+  ;
+
 // Bool
 fragment TRUE : 'TOTALLY RIGHT' ;
 fragment FALSE : 'COMPLETELY WRONG' ;
 BOOL: TRUE | FALSE ;
 
-// Comparisons
-fragment LT: ' SMALLER THAN ' ;
-fragment GT: ' BEATS ' ;
-fragment EQ: ' IS ACTUALLY ' ;
-STRUNBER_COMPARISON: LT | GT | EQ ;
+// Algebraic expressions
+fragment LT : ' SMALLER THAN ' ;
+fragment GT : ' BEATS ' ;
+fragment EQ : ' IS ACTUALLY ' ;
+STRUNBER_COMPARISON : 
+  LT 
+  | GT 
+  | EQ 
+  ;
+
+OP : 
+  ' PLUS ' 
+  | ' MINUS '
+  | ' TIMES '
+  | ' DIVIDED BY '
+  | ' MODULO '
+  ;
 
 fragment OR: ' OR ' ;
 fragment AND: ' AND ' ;
@@ -138,4 +156,5 @@ NEWLINE: '\n' ' '*;
 COMMA: ',' ;
 NAME: [A-Za-z]+[0-9]* ;
 PERIOD: '.' ;
-SPACE: ' '+ ;
+SPACES: ' '+ ;
+SPACE: ' ' ;
