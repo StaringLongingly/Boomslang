@@ -1,5 +1,7 @@
 grammar Boomslang;
 
+// TODO: Fix EOF
+
 /*
 / Parser Rules
 */
@@ -21,7 +23,8 @@ program_piece:
 if_block:
   if_declaration
   program_piece+
-  (ELSE_START program_piece+)?
+  ((ELSE_START NEWLINE program_piece)
+  | (ELSE_START SPACES BLOCK_OPEN program_piece+))?
   BLOCK_CLOSE
   ;
 
@@ -43,7 +46,7 @@ while_declaration:
 // Function
 function_block:
   function_declaration
-  FUNCTION_BODY_START NEWLINE
+  BLOCK_OPEN
   program_piece+
   BLOCK_CLOSE
   ;
@@ -95,13 +98,13 @@ value:
 
 // Declaration String Fragments
 PROGRAM_END: 'PLEASE LIKE AND SUBSCRIBE' ;
-BLOCK_CLOSE: 'END OF STORY' NEWLINE;
+BLOCK_OPEN: 'RUMOR HAS IT' NEWLINE ;
+BLOCK_CLOSE: 'END OF STORY' NEWLINE ;
 IF_START: 'WHAT IF' ;
-ELSE_START: 'LIES! RUMOR HAS IT' NEWLINE;
+ELSE_START: 'LIES!' ;
 WHILE_START: 'STAY TUNED WHILE' ; 
 FUNCTION_DECLARATION_START: 'DISCOVER HOW TO ' ;
 FUNCTION_ARGUMENTS: ' WITH ' ;
-FUNCTION_BODY_START: 'RUMOR HAS IT' ;
 FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACES) ;
 PRINT_START: 'YOU WON\'T WANT TO MISS ' ;
 ASSIGN_START: 'EXPERTS CLAIM ' ;
