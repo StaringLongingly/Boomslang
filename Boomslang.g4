@@ -1,6 +1,4 @@
-grammar Boomslang;
-
-// TODO: Correctly close function blo 
+grammar Boomslang; 
 
 /*
 / Parser Rules
