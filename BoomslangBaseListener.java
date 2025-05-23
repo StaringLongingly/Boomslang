@@ -52,6 +52,18 @@ public class BoomslangBaseListener implements BoomslangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterElse_block(BoomslangParser.Else_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElse_block(BoomslangParser.Else_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIf_declaration(BoomslangParser.If_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}

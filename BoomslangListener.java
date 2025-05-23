@@ -37,6 +37,16 @@ public interface BoomslangListener extends ParseTreeListener {
 	 */
 	void exitIf_block(BoomslangParser.If_blockContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#else_block}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse_block(BoomslangParser.Else_blockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#else_block}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse_block(BoomslangParser.Else_blockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#if_declaration}.
 	 * @param ctx the parse tree
 	 */

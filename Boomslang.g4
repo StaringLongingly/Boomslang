@@ -1,6 +1,6 @@
 grammar Boomslang;
 
-// TODO: Fix EOF
+// TODO: Correctly close function block 
 
 /*
 / Parser Rules
@@ -21,15 +21,19 @@ program_piece:
 
 // If
 if_block:
-  if_declaration
-  program_piece+
-  ((ELSE_START NEWLINE program_piece)
-  | (ELSE_START SPACES BLOCK_OPEN program_piece+))?
+  ((if_declaration NEWLINE program_piece)
+  | (if_declaration SPACES BLOCK_OPEN program_piece+))
+  else_block?
   BLOCK_CLOSE
   ;
 
+else_block:
+  (ELSE_START NEWLINE program_piece)
+  | (ELSE_START SPACES BLOCK_OPEN program_piece+)
+  ;
+
 if_declaration:
-  IF_START SPACES condition NEWLINE
+  IF_START SPACES condition
   ;
 
 // While
