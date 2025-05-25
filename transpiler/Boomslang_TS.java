@@ -11,15 +11,25 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.io.FileOutputStream;
+import java.io.PrintStream;
     
 public class Boomslang_TS {
 
     static void printf(String string) { System.out.print(string); } //leave me alone java
                                                                     
-    static void printIndent(int indentationCount) { //since python handles blocks with identation we have to keep track and print them
+    static void printIndent(int indentationCount) { //since Python handles blocks with identation we have to keep track and print them
         for(int i = 0; i < indentationCount; i++){
             printf("    ");
         }
+    }
+
+    static void printHelp() {
+        printf("Usage:\n");
+        printf("-- java Boomslang_TS.java --help | -h : shows this message\n");
+        printf("-- java Boomslang_TS.java <tabloid sc> : by default stdout is used for the Python source code\n");
+        printf("-- java Boomslang_TS.jaca <tabloid sc> <output file> : redirects Python source code to output file\n");
     }
 
     static class BoomslangListener extends BoomslangBaseListener{
@@ -28,11 +38,11 @@ public class Boomslang_TS {
         static int indentationCount = 0; 
 
         @Override public void enterInit(BoomslangParser.InitContext ctx) {
-            System.out.println("# Beginning of the python program"); 
+            printf("# Beginning of the python program\n"); 
         }
 
         @Override public void exitInit(BoomslangParser.InitContext ctx) {
-            System.out.println("\n# End of the python program\n");
+            printf("\n# End of the python program\n");
         }
 
         @Override public void enterProgram_piece(BoomslangParser.Program_pieceContext ctx) { 
@@ -186,21 +196,29 @@ public class Boomslang_TS {
             
             if (text.equals(" SMALLER THAN ")) { //comparisons 
                 printf(" < ");
-            } else if (text.equals(" BEATS ")) {
+            } 
+            else if (text.equals(" BEATS ")) {
                 printf(" > ");
-            } else if (text.equals(" IS ACTUALLY ")) {
+            } 
+            else if (text.equals(" IS ACTUALLY ")) {
                 printf(" == ");
-            } else if (text.equals(" OR ")) {
+            } 
+            else if (text.equals(" OR ")) {
                 printf(" or ");
-            } else if (text.equals(" AND ")) {
+            } 
+            else if (text.equals(" AND ")) {
                 printf(" and ");
-            } else if (text.equals("TOTALLY RIGHT")) {
+            } 
+            else if (text.equals("TOTALLY RIGHT")) {
                 printf("True");
-            } else if (text.equals("COMPLETELY WRONG")) {
+            } 
+            else if (text.equals("COMPLETELY WRONG")) {
                 printf("False");
-            } else if (text.equals(" TO BE ")) { //declarations
+            } 
+            else if (text.equals(" TO BE ")) { //declarations
                 printf(" = ");
-            } else if (text.equals(",")) { //commas,(on arguments)
+            } 
+            else if (text.equals(",")) { //commas,(on arguments)
                 printf(", ");
             }
             else if (text.equals(" PLUS ")) { //operands
@@ -234,16 +252,29 @@ public class Boomslang_TS {
     public static void main(String[] args) throws Exception {
         String inputFile = null;
 
-        if (args.length > 0){
+        if (args.length > 0 && args.length < 2){
             if(args.length > 0 && (args[0].equals("-h") || args[0].equals("--help"))){
-                System.out.println("Usage: java Boomslang_TS <Tabloid source file>");
-                System.out.println("Python source code will be output to stdout for easy inspection and debugging, redirection to a file can be used to actually execute the python code");
+                printHelp();
                 System.exit(0);
             }            
             inputFile = args[0];
         }
+        else if(args.length > 1 && args.length < 3){
+            String outputFile = args[1];
+            inputFile = args[0];
+
+            try{
+                PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false));
+                System.setOut(fileOut);  // Redirect System.out
+                //System.out.println(outputFile);
+            } catch(Exception e) {
+                System.err.println("Failed opening output");
+                System.exit(1);
+            } 
+        }
         else{
-            System.err.println("Error!!!\n--Usage: java Boomslang_TS <Tabloid source file>");
+            printf("WARNING! WARNING! WARNING!\n");
+            printHelp();
             System.exit(1);
         }
 
