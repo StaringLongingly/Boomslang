@@ -316,10 +316,6 @@ public class Boomslang_TS {
 
         //System.out.println("#Debug: End of Boomslang compilation");
         
-        try {
-            instream.close();
-        } catch (Exception e) {
-            // We don't care about this
-        }
+        //I dont care about closing the files
     }
 }
