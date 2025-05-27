@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
     
-public class Boomslang_TS {
+public class Tabloid2Python {
 
     static void printf(String string) { System.out.print(string); } //leave me alone java
                                                                     
