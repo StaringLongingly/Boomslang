@@ -27,7 +27,7 @@ if_block:
 
 if_mult:
   BLOCK_OPEN (NEWLINE | SPACES) program_piece+ BLOCK_CLOSE // Multiple Statements
-  (else_block | BLOCK_CLOSE)
+  else_block?
   ;
 
 if_single:
