@@ -148,10 +148,12 @@ public class Tabloid2Python {
 	    }
 
 	    @Override public void enterAssign(BoomslangParser.AssignContext ctx) {
+	        //printf("enterAssign");
             printIndent(indentationCount);
 	    }
 	   
-	    @Override public void exitAssign(BoomslangParser.AssignContext ctx) { 
+	    @Override public void exitAssign(BoomslangParser.AssignContext ctx) {
+	        //printf("exitAssign");
             printf("\n");
         }
 
@@ -189,16 +191,16 @@ public class Tabloid2Python {
 	        // Nothing to do 
 	    }
 
-	    @Override public void enterComment(BoomslangParser.CommentContext ctx) {
-	        //printf(enterComment);
+	   @Override public void enterComment(BoomslangParser.CommentContext ctx) {
+	        //printf("enterComment");
 	        printIndent(indentationCount);
 	        printf("#");
-	        printf(ctx.comment_text().getText());
+	        printf(ctx.getText()); //even if its NULL it's okay TODO: fix this
 	    }
 
-	    @Ovveride public void exitComment(BoomslangParser.CommentContext ctx) {
-	        //printf(exitComment);
-	        printf("/n");
+	    @Override public void exitComment(BoomslangParser.CommentContext ctx) {
+	        //printf("exitComment");
+	        printf("\n");
 	    }
 
         @Override public void visitTerminal(TerminalNode node) { //handles things at the end of the tree hence terminal stuff that goes inbetween parser rules in this case
@@ -225,10 +227,10 @@ public class Tabloid2Python {
             else if (text.equals("COMPLETELY WRONG")) {
                 printf("False");
             } 
-            else if (text.equals(" TO BE ")) { //declarations
+            else if (text.equals(" TO BE")) { //declarations
                 printf(" = ");
             } 
-            else if (text.equals(",")) { //commas,(on arguments)
+            else if (text.equals(",")) { //comma,(on arguments)
                 printf(", ");
             }
             else if (text.equals(" PLUS ")) { //operands
