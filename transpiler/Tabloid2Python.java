@@ -27,9 +27,10 @@ public class Tabloid2Python {
 
     static void printHelp() {
         printf("Usage:\n");
-        printf("-- java Boomslang_TS.java --help | -h : shows this message\n");
-        printf("-- java Boomslang_TS.java <tabloid sc> : by default stdout is used for the Python source code\n");
-        printf("-- java Boomslang_TS.jaca <tabloid sc> <output file> : redirects Python source code to output file\n");
+        printf("-- java Tabloid2Python.java --help | -h : shows this message\n");
+        printf("-- java Tabloid2Python.java <tabloid sc> : by default stdout is used for the Python source code\n");
+        printf("-- java Tabloid2Python.java <tabloid sc> <output file> : writes Python source code to output file\n");
+        printf("-- java Tabloid2Python.java <tabloid sc> -cd | --current-directory : writes the Python source code to the current working directory\n")
     }
 
     static class BoomslangListener extends BoomslangBaseListener{
@@ -285,7 +286,8 @@ public class Tabloid2Python {
     public static void main(String[] args) throws Exception {
         String inputFile = null;
 
-        if (args.length > 0 && args.length < 2) { //if one arg we check for help or assign the imput file
+        //I have a small hunch that since testing was done in GNU+Linux there may be issues in Windows when dealing with files
+        if (args.length > 0 && args.length < 2) { //if one arg we check for help or assign the input file
             if (args.length > 0 && (args[0].equals("-h") || args[0].equals("--help"))) {
                 printHelp();
                 System.exit(0);
@@ -296,33 +298,31 @@ public class Tabloid2Python {
             String outputFile = args[1];
             inputFile = args[0];
             
-            if(!args[1].equals("-cd")){
+            if(!args[1].equals("-cd") || !args[1].equals("--current-directory")){ //if -cd flag wasn't passed we open the specified output
                 try {
-                    PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false)); //From stack overflow*
+                    PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false)); //From stack overflow*, false overwrites file
                     System.setOut(fileOut);  // Redirect System.out to the output file
-                    //System.out.println(outputFile);
                 } catch(Exception e) {
                     System.err.println("Failed opening output file");
                     System.exit(1);
                 }
             }
-            else {
+            else { //else we create a new file in the working directory with the same name as the .tbd source
                 Path p = Paths.get(inputFile);
-                String cwd = System.getProperty("user.dir"); //just for the filename..
+                String cwd = System.getProperty("user.dir"); //getting the current working directory 
                 String fileName = p.getFileName().toString();
                 String outputFileAlt = (cwd + "/" + fileName.substring(0, fileName.length() - 3) + "py");
 
                 try {
                     PrintStream fileOutAlt = new PrintStream(new FileOutputStream(outputFileAlt, false)); //From stack overflow*
                     System.setOut(fileOutAlt);  // Redirect System.out to the output file
-                    //System.out.println(outputFile);
                 } catch(Exception e) {
-                    System.err.println("Failed opening output file alternative");
+                    System.err.println("Failed creating a file in the current working directory");
                     System.exit(1);
                 }
             }
         }
-        else {
+        else { //user input invalid arguments
             printf("WARNING! WARNING! WARNING!\n");
             printHelp();
             System.exit(1);
