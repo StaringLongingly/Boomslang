@@ -105,6 +105,10 @@ return:
   FUNCTION_RETURN value NEWLINE
   ;
 
+scan:
+  SCAN_START SPACES STRUNBER
+  ;
+
 comment:
   COMMENT
   ;
@@ -114,6 +118,7 @@ value:
   STRUNBER 
   | value OP value
   | name ' OF ' arguments
+  | scan
   | name
   ;
 
@@ -132,6 +137,8 @@ WHILE_START: 'STAY TUNED WHILE' ;
 FUNCTION_DECLARATION_START: 'DISCOVER HOW TO ' ;
 FUNCTION_ARGUMENTS: ' WITH ' ;
 FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACES) ;
+
+SCAN_START: 'LATEST NEWS ON' ;
 PRINT_START: 'YOU WON\'T WANT TO MISS ' ;
 ASSIGN_START: 'EXPERTS CLAIM ' ;
 ASSIGN_MIDDLE: ' TO BE' ;
@@ -140,7 +147,7 @@ fragment COMMENT_START: 'UNCONFIRMED RUMOR:' ;
 // Strunbers 
 fragment JINT : [0-9]+ ;
 fragment BLOAT : JINT? PERIOD JINT+ ;
-fragment STRING : '\'' .*? '\'' ;
+fragment STRING : '\'' (~['\\] | '\\' .)* '\'' ;
 STRUNBER:
   JINT
   | BLOAT

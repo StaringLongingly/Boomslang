@@ -6,4 +6,4 @@ alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.2-complete.jar:$CLASSPA
 
 antlr4 Boomslang.g4
 javac Boomslang*.java
-grun Boomslang init ./tabloid_source/sample3.tbd -gui
+grun Boomslang init ./tabloid_source/sample5.tbd -gui
