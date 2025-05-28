@@ -197,6 +197,16 @@ public interface BoomslangListener extends ParseTreeListener {
 	 */
 	void exitReturn(BoomslangParser.ReturnContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#scan}.
+	 * @param ctx the parse tree
+	 */
+	void enterScan(BoomslangParser.ScanContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#scan}.
+	 * @param ctx the parse tree
+	 */
+	void exitScan(BoomslangParser.ScanContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#comment}.
 	 * @param ctx the parse tree
 	 */

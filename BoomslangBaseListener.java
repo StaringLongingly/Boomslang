@@ -244,6 +244,18 @@ public class BoomslangBaseListener implements BoomslangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterScan(BoomslangParser.ScanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScan(BoomslangParser.ScanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComment(BoomslangParser.CommentContext ctx) { }
 	/**
 	 * {@inheritDoc}
