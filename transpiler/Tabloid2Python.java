@@ -165,6 +165,14 @@ public class Tabloid2Python {
 	    @Override public void exitReturn(BoomslangParser.ReturnContext ctx) { 
             printf("\n");
         }
+     
+        @Override public void enterScan(BoomslangParser.ScanContext ctx) { 
+            printf(" input(");
+        }
+
+        @Override public void exitScan(BoomslangParser.ScanContext ctx) {
+            printf(")");
+        }
 
 	    @Override public void enterName(BoomslangParser.NameContext ctx) { 
             printf(ctx.getText());
@@ -174,7 +182,7 @@ public class Tabloid2Python {
             // Nothing to do
         }
 
-	    @Override public void enterValue(BoomslangParser.ValueContext ctx) { //only strunbers dont have need to be handled here
+	    @Override public void enterPrimaryExpr(BoomslangParser.PrimaryExprContext ctx) { //only strunbers dont have need to be handled here
             if (ctx.STRUNBER() != null) {
                 String value = ctx.STRUNBER().getText();
                 
@@ -187,10 +195,12 @@ public class Tabloid2Python {
             } 
         }
 
-	    @Override public void exitValue(BoomslangParser.ValueContext ctx) {  
+	    @Override public void exitPrimaryExpr(BoomslangParser.PrimaryExprContext ctx) {  
 	        // Nothing to do 
 	    }
 
+	   //there are a lot of extra rules here related to recursive expressions parsing that I will leave out because we do nothing in them
+	   
 	   @Override public void enterComment(BoomslangParser.CommentContext ctx) {
 	        //printf("enterComment");
 	        printIndent(indentationCount);
@@ -207,7 +217,7 @@ public class Tabloid2Python {
         @Override public void visitTerminal(TerminalNode node) { //handles things at the end of the tree hence terminal stuff that goes inbetween parser rules in this case
             String text = node.getText();
             
-            if (text.equals(" SMALLER THAN ")) { //comparisons 
+            if (text.contains(" SMALLER THAN ")) { //comparisons 
                 printf(" < ");
             } 
             else if (text.equals(" BEATS ")) {
@@ -285,15 +295,32 @@ public class Tabloid2Python {
         else if (args.length > 1 && args.length < 3) {//the second argument is an output folder
             String outputFile = args[1];
             inputFile = args[0];
+            
+            if(!args[1].equals("-cd")){
+                try {
+                    PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false)); //From stack overflow*
+                    System.setOut(fileOut);  // Redirect System.out to the output file
+                    //System.out.println(outputFile);
+                } catch(Exception e) {
+                    System.err.println("Failed opening output file");
+                    System.exit(1);
+                }
+            }
+            else {
+                Path p = Paths.get(inputFile);
+                String cwd = System.getProperty("user.dir"); //just for the filename..
+                String fileName = p.getFileName().toString();
+                String outputFileAlt = (cwd + "/" + fileName.substring(0, fileName.length() - 3) + "py");
 
-            try {
-                PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false)); //From stack overflow*
-                System.setOut(fileOut);  // Redirect System.out to the output file
-                //System.out.println(outputFile);
-            } catch(Exception e) {
-                System.err.println("Failed opening output file");
-                System.exit(1);
-            } 
+                try {
+                    PrintStream fileOutAlt = new PrintStream(new FileOutputStream(outputFileAlt, false)); //From stack overflow*
+                    System.setOut(fileOutAlt);  // Redirect System.out to the output file
+                    //System.out.println(outputFile);
+                } catch(Exception e) {
+                    System.err.println("Failed opening output file alternative");
+                    System.exit(1);
+                }
+            }
         }
         else {
             printf("WARNING! WARNING! WARNING!\n");
@@ -310,8 +337,8 @@ public class Tabloid2Python {
             return;
         }
 
-        Path path = Paths.get(inputFile); //just for the filename.. 
-        System.out.println("# Beginning of Boomslang Tabloid Source to Python 3 source compiler: " + path.getFileName());
+        Path inPath = Paths.get(inputFile); //just for the filename.. 
+        System.out.println("# Beginning of Boomslang Tabloid Source to Python 3 source compiler: " + inPath.getFileName());
 
         CharStream charStream = CharStreams.fromStream(instream);
                                                                
