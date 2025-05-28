@@ -116,6 +116,7 @@ comment:
 name: NAME ;
 value:
   STRUNBER 
+  | '(' value OP value ')'
   | value OP value
   | name ' OF ' arguments
   | scan
