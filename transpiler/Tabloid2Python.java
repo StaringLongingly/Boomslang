@@ -189,6 +189,18 @@ public class Tabloid2Python {
 	        // Nothing to do 
 	    }
 
+	    @Override public void enterComment(BoomslangParser.CommentContext ctx) {
+	        //printf(enterComment);
+	        printIndent(indentationCount);
+	        printf("#");
+	        printf(ctx.comment_text().getText());
+	    }
+
+	    @Ovveride public void exitComment(BoomslangParser.CommentContext ctx) {
+	        //printf(exitComment);
+	        printf("/n");
+	    }
+
         @Override public void visitTerminal(TerminalNode node) { //handles things at the end of the tree hence terminal stuff that goes inbetween parser rules in this case
             String text = node.getText();
             
@@ -221,19 +233,29 @@ public class Tabloid2Python {
             }
             else if (text.equals(" PLUS ")) { //operands
                 printf(" + ");
-            } else if (text.equals(" MINUS ")) {
+            } 
+            else if (text.equals(" MINUS ")) {
                 printf(" - ");
-            } else if (text.equals(" TIMES ")) {
+            } 
+            else if (text.equals(" TIMES ")) {
                 printf(" * ");
-            } else if (text.equals(" DIVIDED BY ")) {
+            } 
+            else if (text.equals(" DIVIDED BY ")) {
                 printf(" / ");
-            } else if (text.equals(" MODULO ")) {
+            } 
+            else if (text.equals(" MODULO ")) {
                 printf(" % ");
             }
+            else if (text.equals("(")) { //parentheses
+                printf("(");
+            }
+            else if (text.equals(")")) {
+                printf(")");
+            }
+
         }
 
-	    @Override 
-	    public void enterEveryRule(ParserRuleContext ctx) { 
+	    @Override public void enterEveryRule(ParserRuleContext ctx) { 
 	        //System.out.print("|"+indentationCount+"|"); 
 	    }
 
@@ -241,8 +263,7 @@ public class Tabloid2Python {
             //System.out.print("|"+indentationCount+"|"); 
 	    }
 
-	    @Override 
-	    public void visitErrorNode(ErrorNode node) { //may not work even if it doesnt a runtime exception will probably occur
+	    @Override public void visitErrorNode(ErrorNode node) { //may not work even if it doesnt a runtime exception will probably occur
             if (node.getText() != null || node.getText() != " ") 
                 System.err.println("Parse error on node: " + node.getText()); 
         }
