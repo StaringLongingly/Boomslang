@@ -86,7 +86,12 @@ return:
   ;
 
 comment:
-  COMMENT_START [.]* NEWLINE
+  COMMENT_START comment_text NEWLINE
+  ;
+
+comment_text:
+  [.]*
+  ;
 
 name: NAME ;
 value:
