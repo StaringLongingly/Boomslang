@@ -30,7 +30,7 @@ public class Tabloid2Python {
         printf("-- java Tabloid2Python.java --help | -h : shows this message\n");
         printf("-- java Tabloid2Python.java <tabloid sc> : by default stdout is used for the Python source code\n");
         printf("-- java Tabloid2Python.java <tabloid sc> <output file> : writes Python source code to the output file\n");
-        printf("-- java Tabloid2Python.java <tabloid sc> -cd | --current-directory : writes the Python source code to the current working directory\n")
+        printf("-- java Tabloid2Python.java <tabloid sc> -cd | --current-directory : writes the Python source code to the current working directory\n");
     }
 
     static class BoomslangListener extends BoomslangBaseListener{
@@ -291,14 +291,19 @@ public class Tabloid2Python {
             if (args.length > 0 && (args[0].equals("-h") || args[0].equals("--help"))) {
                 printHelp();
                 System.exit(0);
-            }            
+            } 
+            if(!args[0].contains(".tbd")) { 
+                System.err.println("Input file not a tabloid source file");
+                printHelp();
+                System.exit(1);
+            }
             inputFile = args[0];
         }
         else if (args.length > 1 && args.length < 3) {//the second argument is an output folder
             String outputFile = args[1];
             inputFile = args[0];
             
-            if(!args[1].equals("-cd") || !args[1].equals("--current-directory")){ //if -cd flag wasn't passed we open the specified output
+            if(!args[1].equals("-cd") && !args[1].equals("--current-directory")){ //if -cd flag wasn't passed we open the specified output
                 try {
                     PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile, false)); //From stack overflow*, false overwrites file
                     System.setOut(fileOut);  // Redirect System.out to the output file
@@ -323,7 +328,7 @@ public class Tabloid2Python {
             }
         }
         else { //user input invalid arguments
-            printf("WARNING! WARNING! WARNING!\n");
+            printf("WARNING! WARNING! WARNING! Invalid Arguments!\n");
             printHelp();
             System.exit(1);
         }
