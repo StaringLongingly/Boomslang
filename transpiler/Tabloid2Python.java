@@ -243,7 +243,8 @@ public class Tabloid2Python {
 
 	    @Override 
 	    public void visitErrorNode(ErrorNode node) { //may not work even if it doesnt a runtime exception will probably occur
-            System.err.println("Parse error on node: " + node.getText()); 
+            if (node.getText() != null || node.getText() != " ") 
+                System.err.println("Parse error on node: " + node.getText()); 
         }
     }
 
