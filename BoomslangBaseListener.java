@@ -52,6 +52,30 @@ public class BoomslangBaseListener implements BoomslangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIf_mult(BoomslangParser.If_multContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIf_mult(BoomslangParser.If_multContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIf_single(BoomslangParser.If_singleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIf_single(BoomslangParser.If_singleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterElse_block(BoomslangParser.Else_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -59,6 +83,30 @@ public class BoomslangBaseListener implements BoomslangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitElse_block(BoomslangParser.Else_blockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElse_mult(BoomslangParser.Else_multContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElse_mult(BoomslangParser.Else_multContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElse_single(BoomslangParser.Else_singleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElse_single(BoomslangParser.Else_singleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -203,18 +251,6 @@ public class BoomslangBaseListener implements BoomslangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitComment(BoomslangParser.CommentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterComment_text(BoomslangParser.Comment_textContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitComment_text(BoomslangParser.Comment_textContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

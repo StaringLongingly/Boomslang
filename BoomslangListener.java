@@ -37,6 +37,26 @@ public interface BoomslangListener extends ParseTreeListener {
 	 */
 	void exitIf_block(BoomslangParser.If_blockContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#if_mult}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_mult(BoomslangParser.If_multContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#if_mult}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_mult(BoomslangParser.If_multContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#if_single}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_single(BoomslangParser.If_singleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#if_single}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_single(BoomslangParser.If_singleContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#else_block}.
 	 * @param ctx the parse tree
 	 */
@@ -46,6 +66,26 @@ public interface BoomslangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitElse_block(BoomslangParser.Else_blockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#else_mult}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse_mult(BoomslangParser.Else_multContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#else_mult}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse_mult(BoomslangParser.Else_multContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#else_single}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse_single(BoomslangParser.Else_singleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#else_single}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse_single(BoomslangParser.Else_singleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#if_declaration}.
 	 * @param ctx the parse tree
@@ -166,16 +206,6 @@ public interface BoomslangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComment(BoomslangParser.CommentContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BoomslangParser#comment_text}.
-	 * @param ctx the parse tree
-	 */
-	void enterComment_text(BoomslangParser.Comment_textContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BoomslangParser#comment_text}.
-	 * @param ctx the parse tree
-	 */
-	void exitComment_text(BoomslangParser.Comment_textContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#name}.
 	 * @param ctx the parse tree

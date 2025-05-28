@@ -10,24 +10,44 @@ init:
   ;
 
 program_piece:
-    (if_block
+    (comment
+    | if_block
     | while_block
     | function_block
-    | statement
-    | comment)
+    | statement)
   NEWLINE*
   ;
 
 // If
 if_block:
-  ((if_declaration NEWLINE program_piece)
-  | (if_declaration SPACES BLOCK_OPEN program_piece+ BLOCK_CLOSE))
+  if_declaration
+  (NEWLINE | SPACES)
+  (if_single | if_mult)
+  ;
+
+if_mult:
+  BLOCK_OPEN (NEWLINE | SPACES) program_piece+ BLOCK_CLOSE // Multiple Statements
+  (else_block | BLOCK_CLOSE)
+  ;
+
+if_single:
+  program_piece // Single Statement 
   else_block?
   ;
 
 else_block:
-  (ELSE_START NEWLINE program_piece)
-  | (ELSE_START SPACES BLOCK_OPEN program_piece+ BLOCK_CLOSE)
+  ELSE_START
+  (NEWLINE | SPACES)
+  (else_single | else_mult)
+  ;
+
+else_mult:
+  BLOCK_OPEN (NEWLINE | SPACES) program_piece+ // Multiple Statements
+  BLOCK_CLOSE
+  ;
+
+else_single:
+  program_piece // Single Statement 
   ;
 
 if_declaration:
@@ -82,15 +102,11 @@ assign:
   ;
 
 return:
-  FUNCTION_RETURN value
+  FUNCTION_RETURN value NEWLINE
   ;
 
 comment:
-  COMMENT_START comment_text NEWLINE
-  ;
-
-comment_text:
-  ~'\n'*
+  COMMENT
   ;
 
 name: NAME ;
@@ -119,7 +135,7 @@ FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACES) ;
 PRINT_START: 'YOU WON\'T WANT TO MISS ' ;
 ASSIGN_START: 'EXPERTS CLAIM ' ;
 ASSIGN_MIDDLE: ' TO BE' ;
-COMMENT_START: 'UNCONFIRMED RUMOR:' ;
+fragment COMMENT_START: 'UNCONFIRMED RUMOR:' ;
 
 // Strunbers 
 fragment JINT : [0-9]+ ;
@@ -164,9 +180,10 @@ fragment AND: ' AND ' ;
 BOOL_COMPARISON: OR | AND;
 
 // Strings
-NEWLINE: '\n' ' '*;
+NEWLINE: SPACES? '\n' SPACES?;
 COMMA: ',' ;
 NAME: [A-Za-z]+[0-9]* ;
 PERIOD: '.' ;
-SPACES: ' '+ ;
+SPACES: (' ' | '\t')+ ;
 SPACE: ' ' ;
+COMMENT: COMMENT_START ~('\n')* ;
