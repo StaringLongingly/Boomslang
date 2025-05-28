@@ -90,7 +90,7 @@ comment:
   ;
 
 comment_text:
-  [.]*
+  ~'\n'*
   ;
 
 name: NAME ;
