@@ -236,4 +236,64 @@ public interface BoomslangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitValue(BoomslangParser.ValueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#orExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpr(BoomslangParser.OrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#orExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpr(BoomslangParser.OrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#andExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExpr(BoomslangParser.AndExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#andExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExpr(BoomslangParser.AndExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#addExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddExpr(BoomslangParser.AddExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#addExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddExpr(BoomslangParser.AddExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultExpr(BoomslangParser.MultExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultExpr(BoomslangParser.MultExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpr(BoomslangParser.UnaryExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpr(BoomslangParser.UnaryExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#primaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimaryExpr(BoomslangParser.PrimaryExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#primaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimaryExpr(BoomslangParser.PrimaryExprContext ctx);
 }

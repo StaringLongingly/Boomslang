@@ -114,15 +114,40 @@ comment:
   ;
 
 name: NAME ;
+
+// Arithmetic expressions with proper precedence
 value:
-  STRUNBER 
-  | '(' value OP value ')'
-  | value OP value
-  | name ' OF ' arguments
-  | scan
-  | name
+  orExpr
   ;
 
+orExpr:
+  andExpr (OR andExpr)*
+  ;
+
+andExpr:
+  addExpr (AND addExpr)*
+  ;
+
+addExpr:
+  multExpr ((PLUS | MINUS) multExpr)*
+  ;
+
+multExpr:
+  unaryExpr ((TIMES | DIVIDED_BY | MODULO) unaryExpr)*
+  ;
+
+unaryExpr:
+  primaryExpr
+  | MINUS primaryExpr
+  ;
+
+primaryExpr:
+  STRUNBER
+  | name
+  | name OF arguments  // Function calls
+  | scan
+  | LPAREN value RPAREN
+  ;
 
 /*
 / Lexer Rules
@@ -175,17 +200,24 @@ STRUNBER_COMPARISON :
   | EQ 
   ;
 
-OP : 
-  ' PLUS ' 
-  | ' MINUS '
-  | ' TIMES '
-  | ' DIVIDED BY '
-  | ' MODULO '
-  ;
+// Arithmetic operators (separated for clarity)
+PLUS: ' PLUS ' ;
+MINUS: ' MINUS ' ;
+TIMES: ' TIMES ' ;
+DIVIDED_BY: ' DIVIDED BY ' ;
+MODULO: ' MODULO ' ;
 
-fragment OR: ' OR ' ;
-fragment AND: ' AND ' ;
+// Boolean operators
+OR: ' OR ' ;
+AND: ' AND ' ;
 BOOL_COMPARISON: OR | AND;
+
+// Function call
+OF: ' OF ' ;
+
+// Parentheses for grouping
+LPAREN: '(' ;
+RPAREN: ')' ;
 
 // Strings
 NEWLINE: SPACES? '\n' SPACES?;
