@@ -57,6 +57,7 @@ if_declaration:
 // While
 while_block:
   while_declaration
+  BLOCK_OPEN
   program_piece+
   BLOCK_CLOSE
   ;
@@ -82,9 +83,7 @@ arguments:
   ;
 
 condition:
-  value STRUNBER_COMPARISON value 
-  | condition BOOL_COMPARISON condition
-  | BOOL
+  value
   ;
 
 statement:
@@ -115,7 +114,7 @@ comment:
 
 name: NAME ;
 
-// Arithmetic expressions with proper precedence
+// Expressions with proper precedence (including booleans)
 value:
   orExpr
   ;
@@ -125,7 +124,12 @@ orExpr:
   ;
 
 andExpr:
-  addExpr (AND addExpr)*
+  comparisonExpr (AND comparisonExpr)*
+  ;
+
+comparisonExpr:
+  addExpr ((SMALLER_THAN | BEATS | IS_ACTUALLY) addExpr)*
+  | addExpr
   ;
 
 addExpr:
@@ -143,6 +147,7 @@ unaryExpr:
 
 primaryExpr:
   STRUNBER
+  | BOOL
   | name
   | name OF arguments  // Function calls
   | scan
@@ -190,15 +195,10 @@ fragment TRUE : 'TOTALLY RIGHT' ;
 fragment FALSE : 'COMPLETELY WRONG' ;
 BOOL: TRUE | FALSE ;
 
-// Algebraic expressions
-fragment LT : ' SMALLER THAN ' ;
-fragment GT : ' BEATS ' ;
-fragment EQ : ' IS ACTUALLY ' ;
-STRUNBER_COMPARISON : 
-  LT 
-  | GT 
-  | EQ 
-  ;
+// Comparison operators (separated for clarity)
+SMALLER_THAN: ' SMALLER THAN ' | ' IS SMALLER THAN ' ;
+BEATS: ' BEATS ' ;
+IS_ACTUALLY: ' IS ACTUALLY ' ;
 
 // Arithmetic operators (separated for clarity)
 PLUS: ' PLUS ' ;
@@ -210,7 +210,6 @@ MODULO: ' MODULO ' ;
 // Boolean operators
 OR: ' OR ' ;
 AND: ' AND ' ;
-BOOL_COMPARISON: OR | AND;
 
 // Function call
 OF: ' OF ' ;

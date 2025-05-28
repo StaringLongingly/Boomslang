@@ -257,6 +257,16 @@ public interface BoomslangListener extends ParseTreeListener {
 	 */
 	void exitAndExpr(BoomslangParser.AndExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BoomslangParser#comparisonExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpr(BoomslangParser.ComparisonExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoomslangParser#comparisonExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpr(BoomslangParser.ComparisonExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BoomslangParser#addExpr}.
 	 * @param ctx the parse tree
 	 */
