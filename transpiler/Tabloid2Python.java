@@ -195,7 +195,8 @@ public class Tabloid2Python {
 	        //printf("enterComment");
 	        printIndent(indentationCount);
 	        printf("#");
-	        printf(ctx.getText()); //even if its NULL it's okay TODO: fix this
+	        String comment = ctx.getText(); //even if its NULL it's okay
+	        printf(comment.substring(18, comment.length())); //cutting the declaration since it's parsed all in one
 	    }
 
 	    @Override public void exitComment(BoomslangParser.CommentContext ctx) {
