@@ -27,7 +27,7 @@ if_block:
 
 if_mult:
   BLOCK_OPEN (NEWLINE | SPACES) program_piece+ BLOCK_CLOSE // Multiple Statements
-  else_block?
+  (else_block | BLOCK_CLOSE)
   ;
 
 if_single:
@@ -116,6 +116,7 @@ comment:
 name: NAME ;
 value:
   STRUNBER 
+  | '(' value OP value ')'
   | value OP value
   | name ' OF ' arguments
   | scan
