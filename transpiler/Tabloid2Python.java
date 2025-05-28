@@ -29,7 +29,7 @@ public class Tabloid2Python {
         printf("Usage:\n");
         printf("-- java Tabloid2Python.java --help | -h : shows this message\n");
         printf("-- java Tabloid2Python.java <tabloid sc> : by default stdout is used for the Python source code\n");
-        printf("-- java Tabloid2Python.java <tabloid sc> <output file> : writes Python source code to output file\n");
+        printf("-- java Tabloid2Python.java <tabloid sc> <output file> : writes Python source code to the output file\n");
         printf("-- java Tabloid2Python.java <tabloid sc> -cd | --current-directory : writes the Python source code to the current working directory\n")
     }
 
