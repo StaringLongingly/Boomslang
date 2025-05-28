@@ -13,7 +13,8 @@ program_piece:
     (if_block
     | while_block
     | function_block
-    | statement)
+    | statement
+    | comment)
   NEWLINE*
   ;
 
@@ -77,12 +78,15 @@ print:
   ;
 
 assign:
-  ASSIGN_START name ASSIGN_MIDDLE value NEWLINE
+  ASSIGN_START name ASSIGN_MIDDLE (NEWLINE | SPACES) value NEWLINE
   ;
 
 return:
   FUNCTION_RETURN value
   ;
+
+comment:
+  COMMENT_START [.]* NEWLINE
 
 name: NAME ;
 value:
@@ -109,7 +113,8 @@ FUNCTION_ARGUMENTS: ' WITH ' ;
 FUNCTION_RETURN: 'SHOCKING DEVELOPMENT' (NEWLINE | SPACES) ;
 PRINT_START: 'YOU WON\'T WANT TO MISS ' ;
 ASSIGN_START: 'EXPERTS CLAIM ' ;
-ASSIGN_MIDDLE: ' TO BE ' ;
+ASSIGN_MIDDLE: ' TO BE' ;
+COMMENT_START: 'UNCONFIRMED RUMOR:' ;
 
 // Strunbers 
 fragment JINT : [0-9]+ ;
