@@ -287,7 +287,7 @@ public class Tabloid2Python {
         String inputFile = null;
 
         //I have a small hunch that since testing was done in GNU+Linux there may be issues in Windows when dealing with files
-        if (args.length > 0 && args.length < 2) { //if one arg we check for help or assign the input file
+        if (args.length == 1) { //if one arg we check for help or assign the input file
             if (args.length > 0 && (args[0].equals("-h") || args[0].equals("--help"))) {
                 printHelp();
                 System.exit(0);
@@ -299,7 +299,7 @@ public class Tabloid2Python {
             }
             inputFile = args[0];
         }
-        else if (args.length > 1 && args.length < 3) {//the second argument is an output folder
+        else if (args.length == 2) {//the second argument is an output folder
             String outputFile = args[1];
             inputFile = args[0];
             
